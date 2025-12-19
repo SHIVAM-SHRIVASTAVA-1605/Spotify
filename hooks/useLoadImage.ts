@@ -4,7 +4,7 @@ import { Song } from "@/types";
 const useLoadImage = (song: Song) => {
     const { supabase } = useSupabase();
 
-    if(!song) {
+    if(!song || !song.image_path) {
         return null;
     }
 
