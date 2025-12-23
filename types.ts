@@ -37,10 +37,10 @@ export interface Price {
     active?: boolean;
     description?: string;
     // unit_amount?: string;
-    uniit_amount?: number;
+    unit_amount?: number;
     currency?: string;
     type?: Stripe.Price.Type;
-    inteval?: Stripe.Price.Recurring.Interval;
+    interval?: Stripe.Price.Recurring.Interval;
     interval_count?: number;
     trial_period_days?: number | null;
     metadata?: Stripe.Metadata;
