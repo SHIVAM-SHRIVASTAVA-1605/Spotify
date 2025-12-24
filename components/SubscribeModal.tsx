@@ -23,7 +23,7 @@ const formatPrice = (price: Price) => {
     return priceString;
 }
 
-const SubscribeModal: React.FC<ProductWithPrice> = ({
+const SubscribeModal: React.FC<SubscribeModalProps> = ({
     products
 }) => {
     const subscribeModal = useSubscribeModal();
@@ -77,7 +77,7 @@ const SubscribeModal: React.FC<ProductWithPrice> = ({
                 {products.map((product) => {
                     if(!product.prices?.length) {
                         return (
-                            <div key={products.id}>
+                            <div key={product.id}>
                                 No prices available.
                             </div>
                         );
