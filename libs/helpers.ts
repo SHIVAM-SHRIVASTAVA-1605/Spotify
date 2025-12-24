@@ -17,7 +17,7 @@ export const postData = async ({
     data
 }: {
     url: string,
-    data: { price: Price }
+    data?: { price: Price }
 }) => {
     console.log('POST REQUEST:', url, data);
 
@@ -25,7 +25,7 @@ export const postData = async ({
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json'}),
         credentials: 'same-origin',
-        body: JSON.stringify(data)
+        body: JSON.stringify(data || {})
     });
 
     if(!res.ok) {
@@ -38,7 +38,7 @@ export const postData = async ({
 };
 
 export const toDateTime = (secs: number) => {
-    var t = new Date('1970-01-01T00:30:00Z');
+    const t = new Date('1970-01-01T00:30:00Z');
     t.setSeconds(secs);
     return t;
 };
