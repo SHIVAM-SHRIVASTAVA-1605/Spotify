@@ -31,11 +31,13 @@ export async function POST(
     let event: Stripe.Event;
 
     try {
-        if(!sig || !webhooksSecret) return;
+        if(!sig || !webhooksSecret) {
+            return new NextResponse('Missing webhook signature or secret', { status: 400 });
+        }
         event = stripe.webhooks.constructEvent(body, sig, webhooksSecret);
     } catch(error: any) {
-        console.log('Error messages: ' + error.messages);
-        return new NextResponse(`Webhook Error: ${error.messages}`, { status: 400 });
+        console.log('Webhook Error: ' + error.message);
+        return new NextResponse(`Webhook Error: ${error.message}`, { status: 400 });
     }
 
     if(relevantEvents.has(event.type)) {
@@ -74,8 +76,8 @@ export async function POST(
                     throw new Error('Unhandeled relevant event!');
             }
         } catch (error) {
-            console.log(error);
-            return new NextResponse('Webhook error', {status: 400});
+            console.error('Webhook processing error:', error);
+            return new NextResponse('Webhook error: ' + (error as Error).message, {status: 400});
         }
     }
 

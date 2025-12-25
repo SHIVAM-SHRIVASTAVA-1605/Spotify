@@ -38,7 +38,12 @@ export const postData = async ({
 };
 
 export const toDateTime = (secs: number) => {
-    const t = new Date('1970-01-01T00:30:00Z');
-    t.setSeconds(secs);
-    return t;
+    const milliseconds = secs * 1000;
+    const date = new Date(milliseconds);
+    
+    if (isNaN(date.getTime())) {
+        throw new Error(`Invalid timestamp: ${secs}`);
+    }
+    
+    return date;
 };
