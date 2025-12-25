@@ -138,7 +138,9 @@ const manageSubscriptionStatusChange = async (
         {
             expand: ["default_payment_method"]
         }
-    );
+    ) as Stripe.Subscription;
+
+    const sub = subscription as any;
 
     const subscriptionData: Database["public"]["Tables"]["subscriptions"]["Insert"] = {
         id: subscription.id,
@@ -152,8 +154,8 @@ const manageSubscriptionStatusChange = async (
         cancel_at_period_end: subscription.cancel_at_period_end,
         cancel_at: subscription.cancel_at ? toDateTime(subscription.cancel_at).toISOString() : null,
         canceled_at: subscription.canceled_at ? toDateTime(subscription.canceled_at).toISOString() : null,
-        current_period_start: toDateTime(subscription.current_period_start).toISOString(),
-        current_period_end: toDateTime(subscription.current_period_end).toISOString(),
+        current_period_start: toDateTime(sub.current_period_start).toISOString(),
+        current_period_end: toDateTime(sub.current_period_end).toISOString(),
         created: toDateTime(subscription.created).toISOString(),
         ended_at: subscription.ended_at ? toDateTime(subscription.ended_at).toISOString() : null,
         trial_start: subscription.trial_start ? toDateTime(subscription.trial_start).toISOString() : null,
